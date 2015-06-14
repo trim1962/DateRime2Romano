@@ -1,0 +1,93 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{datetime2-calendarioromano}[2015/05/10 v1.0]
+\DeclareOption*{\PassOptionsToPackage{\CurrentOption}{datetime2}}
+\ProcessOptions
+\RequirePackage{datetime2}
+\newbool{compatta}
+\setbool{compatta}{false}
+\newbool{annodomini}
+\setbool{annodomini}{false}
+\newbool{adurbe}
+\setbool{adurbe}{true}
+\RequireDateTimeModule{baseromano}
+\DTMnewdatestyle{latino-Kalendae}{%
+\renewcommand*\DTMdisplaydate[4]{%
+\testbisestile{##1}%
+\ifnum##3=1\DTMlatinoKalendis{##2}\fi%kalenda%%
+\ifnum##3=\DTMlatinoPridieNonae{##2}\DTMlatinoMensisPridie\DTMlatinoPridieNonaeNome{##2}\fi%%%
+\ifnum##3=\DTMlatinoNonae{##2}\DTMlatinoNonaeNome{##2}\fi%%%
+\ifnum##3=\DTMlatinoIdus{##2}\DTMlatinoIdusNome{##2}\fi%
+\ifboolexpr{%
+	test {\ifnumcomp{##2}{=}{2}}
+	and test {\iftoggle{bisestile}}}
+{\ifnum##3=29 pridie Kalendas Martias\fi}%
+{\ifnum##3=\DTMlatinoMensisDurata{##2}\DTMlatinoMensisPridie\DTMlatinoPridieKalendasNome{##2}\fi}%
+\ifnum##3=\DTMlatinoPridieIdus{##2}\DTMlatinoMensisPridie\DTMlatinoPridieIdusNome{##2}\fi%
+\ifboolexpr{%
+	test {\ifnumless{##3}{\DTMlatinoPridieNonae{##2}}}%
+	and
+	test{\ifnumgreater{##3}{1}}}%
+{\DTMlatinoAnteDiemuno{##2}{##3}}{}%
+\ifboolexpr{%
+	test {\ifnumless{##3}{\DTMlatinoPridieIdus{##2}}}%
+	and
+	test{\ifnumgreater{##3}{\DTMlatinoNonae{##2}}}}%
+{\DTMlatinoAnteDiemdue{##2}{##3}}{}%%
+\ifboolexpr{%
+	test {\ifnumcomp{##2}{=}{2}}
+	and test {\iftoggle{bisestile}}}%
+{\ifboolexpr{%
+		test {\ifnumless{##3}{29}}%
+		and
+		test{\ifnumgreater{##3}{\DTMlatinoIdus{##2}}}}%
+	{\DTMlatinoAnteDiemquattro{##3}}{}}%
+{\ifboolexpr{%
+		test {\ifnumless{##3}{\DTMlatinoMensisDurata{##2}}}%
+		and
+		test{\ifnumgreater{##3}{\DTMlatinoIdus{##2}}}}%
+{\DTMlatinoAnteDiemtre{##2}{##3}}{}}%
+\stampaanno{##1}}}%
+
+\DTMnewdatestyle{latino-Kalendae-abb}{%
+\setbool{compatta}{true}	
+	\renewcommand*\DTMdisplaydate[4]{%
+		\testbisestile{##1}%
+	\ifnum##3=1\DTMlatinoKalendis{##2}\fi%kalenda
+	\ifnum##3=\DTMlatinoPridieNonae{##2}\DTMlatinoMensisPridie\DTMlatinoPridieNonaeNome{##2}\fi%
+	\ifnum##3=\DTMlatinoNonae{##2}\DTMlatinoNonaeNome{##2}\fi%
+	\ifnum##3=\DTMlatinoIdus{##2}\DTMlatinoIdusNome{##2}\fi%
+	\ifboolexpr{%
+		test {\ifnumcomp{##2}{=}{2}}
+		and test {\iftoggle{bisestile}}}
+	{\ifnum##3=29 pridie Kalendas Martias\fi}%
+{\ifnum##3=\DTMlatinoMensisDurata{##2}\DTMlatinoMensisPridie\DTMlatinoPridieKalendasNome{##2}\fi}%
+	\ifnum##3=\DTMlatinoPridieIdus{##2}\DTMlatinoMensisPridie\DTMlatinoPridieIdusNome{##2}\fi%
+	\ifboolexpr{test {\ifnumless{##3}{\DTMlatinoPridieNonae{##2}}}%
+		and	test{\ifnumgreater{##3}{1}}}%
+		{\DTMlatinoAnteDiemuno{##2}{##3}}{}%
+		\ifboolexpr{%
+			test {\ifnumless{##3}{\DTMlatinoPridieIdus{##2}}}%
+			and
+			test{\ifnumgreater{##3}{\DTMlatinoNonae{##2}}}}%
+		{\DTMlatinoAnteDiemdue{##2}{##3}}{}%%
+		\ifboolexpr{%
+			test {\ifnumcomp{##2}{=}{2}}
+			and test {\iftoggle{bisestile}}}%
+		{\ifboolexpr{%
+				test {\ifnumless{##3}{29}}%
+				and
+				test{\ifnumgreater{##3}{\DTMlatinoIdus{##2}}}}%
+			{\DTMlatinoAnteDiemquattro{##3}}{}}%
+		{\ifboolexpr{%
+				test {\ifnumless{##3}{\DTMlatinoMensisDurata{##2}}}%
+				and
+				test{\ifnumgreater{##3}{\DTMlatinoIdus{##2}}}}%
+			{\DTMlatinoAnteDiemtre{##2}{##3}}{}}%
+	\stampaanno{##1}}}%
+\DTMnewtimestyle{latino-Hora}{%
+	\DTMshowzonefalse
+	\renewcommand\DTMdisplaytime[3]{%
+	\DTMlatinoHora{##1}}}%
+\newcommand*{\DTMlatinozonemaps}{%
+	\DTMdefzonemap{01}{00}{}%
+	\DTMdefzonemap{02}{00}{}}%

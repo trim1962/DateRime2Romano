@@ -1,0 +1,56 @@
+\documentclass[italian]{article}
+\usepackage{ifpdf,ifxetex} 
+\ifpdf
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+\else
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{italian}
+\fi 
+\usepackage[showdow,useregional]{datetime2-calendarioromano}
+
+\usepackage[showdow,useregional]{datetime2}
+\listfiles
+\begin{document}
+\DTMsavetimestamp{mydate1}{2015-01-01T08:05:00+01:00}
+\DTMsavetimestamp{mydate2}{2010-01-12T08:05:00+01:00}
+
+
+
+\begin{description}
+	\item[Annodomini]
+	\annodomini
+	\begin{enumerate}
+		\DTMsetdatestyle{italian}
+		\DTMsettimestyle{italian}
+		\item  \DTMuse{mydate1}
+		\DTMsetdatestyle{latino-Kalendae}
+		\DTMsettimestyle{latino-Hora}
+		\item  \DTMuse{mydate1}
+		\DTMsetdatestyle{italian}
+		\DTMsettimestyle{italian}
+		\item  \DTMuse{mydate2}
+		\DTMsetdatestyle{latino-Kalendae}
+		\DTMsettimestyle{latino-Hora}
+		\item  \DTMuse{mydate2}
+     \end{enumerate}
+	\item [Ad urbe]
+	\adurbe
+		\begin{enumerate}
+			\DTMsetdatestyle{italian}
+			\DTMsettimestyle{italian}
+			\item  \DTMuse{mydate1}
+			\DTMsetdatestyle{latino-Kalendae}
+			\DTMsettimestyle{latino-Hora}
+			\item  \DTMuse{mydate1}
+			\DTMsetdatestyle{italian}
+			\DTMsettimestyle{italian}
+			\item  \DTMuse{mydate2}
+			\DTMsetdatestyle{latino-Kalendae}
+			\DTMsettimestyle{latino-Hora}
+			\item  \DTMuse{mydate2}
+		\end{enumerate}
+\end{description}	
+\end{document}

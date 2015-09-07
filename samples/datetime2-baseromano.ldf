@@ -15,7 +15,6 @@
 		{\toggletrue{bisestile}}{\togglefalse{bisestile}}%giuliano
 	}
 }
-
 \newcounter{countS}
 \newcounter{countT}
 \newcounter{countM}
@@ -29,7 +28,6 @@
 		\setcounter{countS}{\numexpr 754-\thecountS}%
 		~Anno\ifbool{annodomini}{--\stamparoman{\thecountT}--ACN}{}
 		\ifbool{adurbe}{--\stamparoman{\thecountS}--AUC}{}}}
-
 \newcommand*{\DTMlatinoMensisDurata}[1]{%
 	\ifcase#1
 	\or
@@ -726,4 +724,3 @@
 		\or
 		Ante diem undevicesimum Kalendas Martias%
 		\fi}}%
-
